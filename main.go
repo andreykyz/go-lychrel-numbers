@@ -6,8 +6,8 @@ import (
 )
 
 func main() {
-	//candidate := "196"
-	candidate := "89"
+	//candidate := []byte{1,9,6}
+	candidate := []byte{1,1}
 	size := int64(len(candidate))
 	iter:=int64(1)
 	start := time.Now().UnixNano()
@@ -27,7 +27,7 @@ func main() {
 		}
 	}
 }
-func testPalindrom(str string, size int64, iter int64) bool{
+func testPalindrom(str []byte, size int64, iter int64) bool{
 	j:=0
 	for i:=size-1 ; i > (size>>1); i--{
 		if str[i] != str[j] {
@@ -39,24 +39,23 @@ func testPalindrom(str string, size int64, iter int64) bool{
 	return true
 }
 
-func add(str string, size int64) string {
-	result:=""
+func add(str []byte, size int64) []byte {
+	result:=[]byte{}
 	j:=0
 	carry := byte(0)
 	for i:=size-1; i >= 0; i--{
-		var res [1]byte
-		res[0] = (str[i]) + (str[j]-48) + carry
-		if res[0] > (9 + 48) {
-			res[0] = res[0]-10
+		res := str[i] + str[j] + carry
+		if res > 9 {
+			res = res-10
 			carry = 1
 		} else {
 			carry = 0
 		}
-		result += string(res[:])
+		result = append(result, res)
 		j++
 	}
 	if carry == 1 {
-		result += "1"
+		result = append(result, 1)
 	}
 	return result
 }
